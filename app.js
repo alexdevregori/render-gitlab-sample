@@ -1,31 +1,34 @@
-// Node packages being used
+// Node packages being used. More info at https://www.npmjs.com/
 const express = require("express");
-const bodyParser = require("body-parser"); // Parses JSON bodies
-const cookieParser = require("cookie-parser");
-const app = express().use(bodyParser.text());
-const port = process.env.PORT || 3001;
 const axios = require("axios"); // Sends HTTP requests
 
-// Configuration of our server
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+// Configuration of our server. More info at https://expressjs.com/
+const app = express()
+  .use(express.json())
+  .use(express.urlencoded({ extended: true }));
+const port = process.env.PORT || 3001;
 
-const PRODUCTBOARD_INTEGRATION_ID = "4142071f-97f8-4b55-9719-5e4008613bec"; // Plugin intgeration ID since created
+// Integration variables
+const PRODUCTBOARD_INTEGRATION_ID = "b4104ebb-c1c1-4bf7-939d-04b4126a4ed4"; // Plugin intgeration ID since created
 const GITLAB_TOKEN = "glpat-ETvxAgaZygn4vnA3-m4T"; // Gitlab token to authorize HTTP Requests
 const GITLAB_PROJECT_ID = "35858336"; // GitLab Project ID
 const PRODUCTBOARD_TOKEN = // PB API token to authorize requests
   "Bearer eyJ0eXAiOiJKV1QiLCJraWQiOiJlY2IzMmI3MjdiNGY5NWFiOTkzNWNlMjhjYWViZGQ0MGRhYzIzMDk2YTJhZjliMDU1ZmJkZGEwOGM0ZmZiMzNmIiwiYWxnIjoiUlM1MTIifQ.eyJpc3MiOiJjNjU2YjMyNC04NmRjLTQ0ZWQtOWViNy1mMGYwMDEzMDhlMGEiLCJzdWIiOiI5NzEwMyIsInJvbGUiOiJhZG1pbiIsImF1ZCI6Imh0dHBzOi8vYXBpLnByb2R1Y3Rib2FyZC5jb20iLCJ1c2VyX2lkIjo5NzEwMywic3BhY2VfaWQiOiI1Nzc4MSIsImlhdCI6MTYzODIwNTEzN30.H4K0MNtRUeNLyClaEuHMp1UY8lUTgrR8QBfaVD8uyuEAtk9U-y9uuWb0m0CpJuLUm9bc3fSanFc8_-by9OgT2WERJT0UjgmH2RbXxN-te8tptsw2kdgbUqFNIMP2wqpXkIvwamdIwxtJP3Tj07BV0NpuoSGBLoppSNelg2yOWgOM9vtnrjHZx1V94lAJde9-bXo092wFaRMk8QcdTu-AyY-4Ao_x4h6p5d1Yzf1_L7qb7Royk7YhpAKySUK0B2noShlFzLu9roPnYwO8GT7EEFE5OtKco4sURYDXDULZbtyJE1Ztr_dY6W4PI9D2kssDo6cIYVK_AsoT51CWzvhKWw";
 
-// Initial route to confirm app is running on Heroku
+// Initial route to confirm app is running
 app.get("/", (req, res) => {
-  res.send("This is a Heroku server hosting our Productboard <> GitLab integration");
+  res.send("This is the service responsible for hosting our Productboard <> GitLab integration");
 });
 
 // Route to authenticate plugin connection. More info here: https://developer.productboard.com/#tag/pluginIntegrations
 app.get("/plugin", (req, res) => {
-  res.setHeader("Content-type", "text/plain");
-  res.status(200).send(req.query.validationToken);
+  try {
+    res.setHeader("Content-type", "text/plain");
+    res.status(200).send(req.query.validationToken);
+    console.log("Plugin integration created!");
+  } catch (error) {
+    console.log("Error when creating Plugin integration:", error);
+  }
 });
 
 // Optional route if webhooks from Productboard are needed to support a 2-way sync
@@ -71,7 +74,10 @@ app.post("/plugin", async (req, res) => {
 
             // Connect feature and issue
             createProductboardPluginIntegrationConnection(pbFeatureID, issueID, issueURL)
-              .then((_) => console.log("Productboard feature connected to Gitlab issue."))
+              .then((response) => {
+                console.log("Productboard feature connected to Gitlab issue.");
+                console.log(response.data);
+              })
               .catch((error) =>
                 console.log("Error when connecting Productboard feature and Gitlab issue:", error)
               );
