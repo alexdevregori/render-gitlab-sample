@@ -1,0 +1,13 @@
+services:
+  # A Docker web service
+  - type: web
+    name: pb-gitlab-integration
+    env: node
+    branch: main # optional (defaults to master)
+    buildCommand: npm install
+    startCommand: node app.js    numInstances: 3 # optional (defaults to 1)
+    envVars:
+      - key: PRODUCTBOARD_INTEGRATION_ID
+      - key: GITLAB_TOKEN
+      - key: GITLAB_PROJECT_ID
+      - key: PRODUCTBOARD_TOKEN
