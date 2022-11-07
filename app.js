@@ -9,7 +9,7 @@ const app = express()
 const port = process.env.PORT || 3001;
 
 // Integration variables
-const PRODUCTBOARD_INTEGRATION_ID = "b4104ebb-c1c1-4bf7-939d-04b4126a4ed4"; // Plugin intgeration ID since created
+const PRODUCTBOARD_INTEGRATION_ID = "6c2063a2-2f9b-4b03-8c15-44bdd7c25175"; // Plugin intgeration ID since created
 const GITLAB_TOKEN = "glpat-ETvxAgaZygn4vnA3-m4T"; // Gitlab token to authorize HTTP Requests
 const GITLAB_PROJECT_ID = "35858336"; // GitLab Project ID
 const PRODUCTBOARD_TOKEN = // PB API token to authorize requests
