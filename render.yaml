@@ -8,6 +8,10 @@ services:
     startCommand: node app.js    numInstances: 3 # optional (defaults to 1)
     envVars:
       - key: PRODUCTBOARD_INTEGRATION_ID
+        sync: false
       - key: GITLAB_TOKEN
+        sync: false
       - key: GITLAB_PROJECT_ID
+        sync: false
       - key: PRODUCTBOARD_TOKEN
+        sync: false
