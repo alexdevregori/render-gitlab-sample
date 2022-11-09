@@ -1,6 +1,7 @@
 // Node packages being used. More info at https://www.npmjs.com/
 const express = require("express");
 const axios = require("axios"); // Sends HTTP requests
+const env = require("dotev") // Creates environment variables
 
 // Configuration of our server. More info at https://expressjs.com/
 const app = express()
@@ -9,12 +10,11 @@ const app = express()
 const port = process.env.PORT || 3001;
 
 // Integration variables
-const PRODUCTBOARD_INTEGRATION_ID = "6c2063a2-2f9b-4b03-8c15-44bdd7c25175"; // Plugin intgeration ID since created
-const GITLAB_TOKEN = "glpat-ETvxAgaZygn4vnA3-m4T"; // Gitlab token to authorize HTTP Requests
-const GITLAB_PROJECT_ID = "35858336"; // GitLab Project ID
-const PRODUCTBOARD_TOKEN = // PB API token to authorize requests
-  "Bearer eyJ0eXAiOiJKV1QiLCJraWQiOiJlY2IzMmI3MjdiNGY5NWFiOTkzNWNlMjhjYWViZGQ0MGRhYzIzMDk2YTJhZjliMDU1ZmJkZGEwOGM0ZmZiMzNmIiwiYWxnIjoiUlM1MTIifQ.eyJpc3MiOiJjNjU2YjMyNC04NmRjLTQ0ZWQtOWViNy1mMGYwMDEzMDhlMGEiLCJzdWIiOiI5NzEwMyIsInJvbGUiOiJhZG1pbiIsImF1ZCI6Imh0dHBzOi8vYXBpLnByb2R1Y3Rib2FyZC5jb20iLCJ1c2VyX2lkIjo5NzEwMywic3BhY2VfaWQiOiI1Nzc4MSIsImlhdCI6MTYzODIwNTEzN30.H4K0MNtRUeNLyClaEuHMp1UY8lUTgrR8QBfaVD8uyuEAtk9U-y9uuWb0m0CpJuLUm9bc3fSanFc8_-by9OgT2WERJT0UjgmH2RbXxN-te8tptsw2kdgbUqFNIMP2wqpXkIvwamdIwxtJP3Tj07BV0NpuoSGBLoppSNelg2yOWgOM9vtnrjHZx1V94lAJde9-bXo092wFaRMk8QcdTu-AyY-4Ao_x4h6p5d1Yzf1_L7qb7Royk7YhpAKySUK0B2noShlFzLu9roPnYwO8GT7EEFE5OtKco4sURYDXDULZbtyJE1Ztr_dY6W4PI9D2kssDo6cIYVK_AsoT51CWzvhKWw";
-
+const PRODUCTBOARD_INTEGRATION_ID = process.env.PRODUCTBOARD_INTEGRATION_ID; // Plugin intgeration ID since created
+const GITLAB_TOKEN = process.env.GITLAB_TOKEN; // Gitlab token to authorize HTTP Requests
+const GITLAB_PROJECT_ID = process.env.GITLAB_PROJECT_ID; // GitLab Project ID
+const PRODUCTBOARD_TOKEN = process.env.PRODUCTBOARD_TOKEN // PB API token to authorize requests
+      
 // Initial route to confirm app is running
 app.get("/", (req, res) => {
   res.send("This is the service responsible for hosting our Productboard <> GitLab integration");
