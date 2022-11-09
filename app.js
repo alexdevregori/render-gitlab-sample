@@ -1,7 +1,7 @@
 // Node packages being used. More info at https://www.npmjs.com/
 const express = require("express");
 const axios = require("axios"); // Sends HTTP requests
-const env = require("dotev") // Creates environment variables
+const env = require("dotenv"); // Creates environment variables
 
 // Configuration of our server. More info at https://expressjs.com/
 const app = express()
@@ -13,8 +13,8 @@ const port = process.env.PORT || 3001;
 const PRODUCTBOARD_INTEGRATION_ID = process.env.PRODUCTBOARD_INTEGRATION_ID; // Plugin intgeration ID since created
 const GITLAB_TOKEN = process.env.GITLAB_TOKEN; // Gitlab token to authorize HTTP Requests
 const GITLAB_PROJECT_ID = process.env.GITLAB_PROJECT_ID; // GitLab Project ID
-const PRODUCTBOARD_TOKEN = process.env.PRODUCTBOARD_TOKEN // PB API token to authorize requests
-      
+const PRODUCTBOARD_TOKEN = process.env.PRODUCTBOARD_TOKEN; // PB API token to authorize requests
+
 // Initial route to confirm app is running
 app.get("/", (req, res) => {
   res.send("This is the service responsible for hosting our Productboard <> GitLab integration");
